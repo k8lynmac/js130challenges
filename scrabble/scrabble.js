@@ -2,6 +2,9 @@ class Scrabble {
   constructor(scrabble) {
     this.scrabble = scrabble;
   }
+  static score(word) {
+    return new Scrabble(word).score();
+  }
 
   //computes score of this.scrabble
   score() {
@@ -23,11 +26,12 @@ class Scrabble {
       let count = this.getCount(wordArr[position].toUpperCase());
       sum += count;
     }
-
+    console.log(sum)
     return sum;
   }
 
   getCount(letter) {
+    console.log(letter);
     if ('AEIOULNRST'.includes(letter)) {
       return 1;
     } else if ('DG'.includes(letter)) {
@@ -39,7 +43,7 @@ class Scrabble {
     } else if ('K'.includes(letter)) {
       return 5;
     } else if ('JX'.includes(letter)) {
-      return 6;
+      return 8;
     } else if ('QZ'.includes(letter)) {
       return 10;
     }

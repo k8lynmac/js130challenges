@@ -29,11 +29,11 @@ describe("Scrabble", () => {
     expect(new Scrabble('quirky').score()).toBe(22);
   });
 
-  xtest("scores are case-insensitive", () => {
+  test("scores are case-insensitive", () => {
     expect(new Scrabble('OXYPHENBUTAZONE').score()).toBe(41);
   });
 
-  xtest("convenient scoring", () => {
+  test("convenient scoring", () => {
     expect(Scrabble.score('alacrity')).toBe(13);
   });
 });
