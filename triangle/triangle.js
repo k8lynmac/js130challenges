@@ -2,45 +2,44 @@
 
 class Triangle {
   constructor(side1, side2, side3) {
-    this.sides = [side1, side2, side3]
+    this.side1 = side1;
+    this.side2 = side2;
+    this.side3 = side3;
 
-    if (!(this.validateSides())) {
-      throw new Error;
-    } 
+    if (!this.validateSides()) {
+      throw new Error('Invalid triangle lengths');
+    }
   }
 
+  //returns strings equilateral, isosceles, scalene or throws error
+  kind() {
+
+    if (this.isItEquilateral()) return 'equilateral';
+
+    if (this.isItScalene()) return 'scalene';
+
+    return 'isosceles';
+  }
+
+  //all 3 sides are same length
   isItEquilateral() {
-    return (this.sides.every(side => side === this.sides[0]));
-  
+    return (this.side1 === this.side2 && this.side1 === this.side3);
   }
 
-  //all sides of different length 
+  //all sides of different lengths
   isItScalene() {
-    let [side1, side2, side3] = this.sides;
-    if ((side1 !== side2) && (side1 !== side3) && (side2 !== side3)) return true;
+    return (this.side1 !== this.side2 && this.side1 !== this.side3 && this.side2 !== this.side3);
   }
+
   
   validateSides() {
-    //all sides must be > 0 
-    let [side1, side2, side3] = this.sides;
-    if (this.sides.some(side => side <= 0)) return false;
-    //sum of lengths of any two sides must be greater than length of the third side 
-    if (side1 >= side2 + side3 || 
-          side2 >= side1 + side3 ||
-            side3 >= side1 + side2) {
-              return false;
-            }
-    return true;
-  }
+    //all sides must be of length > 0
+    if (this.side1 <= 0 || this.side2 <= 0 || this.side3 <= 0) return false;
 
-  kind() {
-    if (this.isItEquilateral()) {
-      return 'equilateral';
-    } else if (this.isItScalene()) {
-      return 'scalene';
-    } else {
-      return 'isosceles';
-    }
+    //sum of the lengths of any two sides must be greater than the length of the third side.
+    if (this.side1 >= (this.side2 + this.side3) || this.side2 >= (this.side1 + this.side3) || this.side3 >= (this.side1 + this.side2)) return false;
+    
+    return true;
   }
 }
 

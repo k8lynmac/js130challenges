@@ -1,76 +1,48 @@
 class RomanNumeral {
-  constructor(decimalNumber) {
-    this.decimal = decimalNumber;
+  static ROMAN_NUMS = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5, 
+    IV: 4,
+    I: 1,
   }
 
+  constructor(decimal) {
+    this.decimal = decimal;
+    
+  }
+
+  //returns roman numeral string equivalent; conversion from decimal number
   toRoman() {
+    let decimal = this.decimal;
     let roman = '';
-    let number = this.decimal;
-    //I = 1
-    //V = 5
-    //X = 10
-    //L = 50
-    //C = 100
-    //D = 500
-    //M = 1000
+    while (decimal > 0) {
+      let keys = Object.keys(RomanNumeral.ROMAN_NUMS);
+   
+      keys.forEach(letterGrp => {
+  
+        let value = RomanNumeral.ROMAN_NUMS[letterGrp];
+        if (decimal / value > 0) {
+          let remainder = Math.floor(decimal / value);
+          roman += letterGrp.repeat(remainder);
+          decimal -= remainder * value;
+          console.log(decimal);
+        }
+      })
+    }
 
-    //if number divisible by 1000, roman string = 
-    while (number > 0) {
-      if (number >= 1000) {
-        let count = Math.floor(number/1000);
-        roman += 'M'.repeat(count);
-        number -= (1000*count);
-      } else if (number < 1000 && number >= 900) {
-        roman += 'CM';
-        number -= 900;
-      } else if (number >= 500) {
-        roman += 'D';
-        number -= 500;
-      } else if ((number >= 100) && (number < 400)) {
-        let count = Math.floor(number/100);
-        roman += 'C'.repeat(count);
-        number -= (100*count);
-      } else if (number >= 400) {
-        roman += 'CD'
-        number -= 400;
-      } else if (number < 100 && number >= 90) {
-        roman += 'XC';
-        number -= 90;
-      } else if (number >= 50) {
-        roman += 'L';
-        number -= 50;
-      } else if ((number >= 10) && (number < 40)) {
-        let count = Math.floor(number/10);
-        roman += 'X'.repeat(count);
-        number -= (10*count);
-      } else if (number >= 40) {
-        roman += 'XL';
-        number -= 40;
-      } else if (number < 10 && number >= 9) {
-        roman += 'IX';
-        number -= 9;
-      } else if (number >= 5) {
-        roman += 'V';
-        number -= 5;
-      } else if ((number >= 1) && (number < 4)) {
-        roman += 'I'.repeat(number);
-        number -= (number);
-      } else if (number >= 4) {
-        roman += 'IV';
-        number -= 4;
-      }
-
-
-
-      console.log(number);
-  }
-  return roman;
+    return roman;
   }
 }
 
-let number = new RomanNumeral(2040); 
-console.log(number.toRoman()); //MMXL
-
-
-
+let number = new RomanNumeral(3500);
+console.log(number.toRoman());
 module.exports = RomanNumeral;
