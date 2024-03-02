@@ -25,7 +25,6 @@ class Clock {
   }
 
   add(minutes) {
-
     let minutesSinceMidnight = this._computeMinutesSinceMidnight() + minutes;
 
     while (minutesSinceMidnight >= Clock.ONE_DAY) {
@@ -36,8 +35,6 @@ class Clock {
   }
 
   subtract(minutes) {
-
-
     let minutesSinceMidnight = this._computeMinutesSinceMidnight() - minutes;
 
     while (minutesSinceMidnight < 0) {
