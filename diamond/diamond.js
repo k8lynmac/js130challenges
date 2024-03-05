@@ -36,71 +36,81 @@
 //   }
 // }
 
-class Diamond {
+/*
+-find max width/height
+based on input letter, length = charCodeAt(inputChar) - charCodeAt('A')
 
-  static alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+-determine letter for each row 
+
+-determine spaces between letters at each row
+
+-make a row CxxxC
+
+-center it xxCxxxCxx
+
+*/
+
+class Diamond {
+ 
+  static alphabet = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`;
 
   static makeDiamond(letter) {
-
-    //create range of letters
-    let range = this.createRange(letter);
-
-    //find width of diamond
+    let range = this.getRange(letter);
     let width = range.length;
+    let diamond = [];
 
-    //iterate over range and make row
-    let rowArr = [];
-    range.forEach(char => {
-      rowArr.push(this.center(this.makeRow(char), width)); 
-  
-    })
-
-    //join rowArray and return 
-    console.log(rowArr.join('\n'));
-    return `${rowArr.join('\n')}\n`;
-  }
-
-  static createRange(letter) {
-    let range = [];
-    let idx = 0;
-
-    for (let idx = 0; idx < this.alphabet.length; idx++) {
-      range.push(this.alphabet[idx]);
-
-      if (this.alphabet[idx] === letter) break;
+    for (let idx = 0; idx < width; idx++) {
+      diamond.push(this.makeCenter(this.makeRow(range[idx]), width));
     }
 
-    return [...range, ...range.reverse().slice(1)];
+    console.log(diamond.join('\n'));
+    return diamond.join('\n') + '\n';
   }
 
-  static makeRow(char) {
-    if (char === 'A') return 'A';
-    if (char === 'B') return 'B B';
-    let width = this.createRange(char).length;
 
-    let str = char + this.determineSpaces(char) + char;
-    return str;
+  static makeRow(letter) {
+    if (letter === 'A') return 'A';
+    if (letter === 'B') return 'B B';
+
+    return letter + this.determineSpaces(letter) + letter; 
+
   }
 
-  static center(content, width) {
-    let outer = ' '.repeat((width - content.length)/2);
-    return `${outer}${content}${outer}`;
+  static makeCenter(row, width) {
+
+    let edge = (width - row.length)/2;
+    return ' '.repeat(edge) + row + ' '.repeat(edge);
   }
 
   static determineSpaces(letter) {
     let currentLetterIdx = 1;
-    let spaces = 1; 
-    let currentLetter = this.alphabet[currentLetterIdx];
+    let spaces = 1;
+    let currentLetter = Diamond.alphabet[currentLetterIdx];
 
     while (currentLetter !== letter) {
       spaces += 2;
       currentLetterIdx++;
-      currentLetter = this.alphabet[currentLetterIdx];
+      currentLetter = Diamond.alphabet[currentLetterIdx];
     }
-
     return ' '.repeat(spaces);
   }
 
+  static getRange(letter) {
+    let range = [];
+    let alphaArr = Diamond.alphabet.split('');
+
+    for (let idx = 0; idx < alphaArr.length; idx++) {
+      if (alphaArr[idx] !== letter) {
+        range.push(alphaArr[idx]);
+      } else {
+        range.push(alphaArr[idx]);
+        break;
+      }
+    }
+
+    return [...range, ...range.reverse().splice(1)];
+
+  }
 }
 
 
